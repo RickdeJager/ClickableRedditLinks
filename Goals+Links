@@ -1,0 +1,18 @@
+Project goals:
+*intercept and block all chat messages containing /u/ and /r/ links (including messages send by other plugins)
+*edit the /u/ and /r/ links to be clickable using json text formating
+*send the edited message
+
+Possible problems:
+*making sure the messages aren't delivered to the wrong person/ broadcasted to everyone
+*making sure to keep all formating intact ($a codes, prefixes, etc)
+
+Possible fix
+*if possible, only edit thethe message and then let it go through
+
+Handy links:
+* https://bukkit.org/threads/tut-intercept-and-edit-all-messages.98620/
+* https://bukkit.org/threads/editing-chat-messages-for-certain-players.226121/
+    >doesn't apply to this situation, but the event.getformating() thing sounds usefull
+* http://wiki.vg/Chat
+* https://www.spigotmc.org/threads/clickable-text.54628/
