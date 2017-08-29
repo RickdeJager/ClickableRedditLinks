@@ -27,28 +27,11 @@ public class ReplaceAllChat {
                 String message = msg.getJson();
 
                 message = hc.FilterMessage(message, true);
-
-             /*   try {
-                    if (message.contains("/r/") && !message.contains("reddit.com/r/")) {
-                        String subreddit = hc.FindSubString(message, "r");
-                        message = message.replace("/r/" + subreddit, hc.link);
-                        message = message.replaceAll("ToBeReplacedWithStuff", "/r/" + subreddit);
-                    }
-                    if (message.contains("/u/") && !message.contains("reddit.com/u/")) {
-                        String user = hc.FindSubString(message, "u");
-                        message = message.replace("/u/" + user, hc.link);
-                        message = message.replaceAll("ToBeReplacedWithStuff", "/u/" + user);
-                    }
-                } catch (IllegalArgumentException e) {
-                    System.out.println("[ClickableRedditLinks] An error occurred while trying to get the subreddit/user");
-                    return;
-                }*/
-
                 try {
                     msg.setJson(message);
                     chatComponents.write(0, msg);
                 } catch (Exception e) {
-                    System.out.println("[ClickableRedditLinks] An error occurred while trying to convert back to json chat");
+                    System.out.println("[ClickableRedditLinks] An error occurred while trying to convert back to json chat.");
                     return;
                 }
             }

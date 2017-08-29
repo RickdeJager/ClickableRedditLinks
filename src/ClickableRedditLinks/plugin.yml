@@ -1,6 +1,6 @@
 name: ClickableRedditLinks
 main: ClickableRedditLinks.MainClass
 softdepend: [ProtocolLib]
-version: 0.02
+version: 0.2
 author: TheFloatGoat
 

@@ -15,7 +15,7 @@ public class MainClass extends JavaPlugin {
             ReplaceAllChat replaceAllChat = new ReplaceAllChat();
             replaceAllChat.init(this);
         }else{
-            System.out.println("[ClickableRedditLinks] ProtocolLib was not found, so reddit links in commands will not be recognised");
+            System.out.println("[ClickableRedditLinks] ProtocolLib was not found, so only reddit links in player chat will be recognised.");
             Bukkit.getPluginManager().registerEvents(new ReplacePlayerChat(), this);
         }
 
@@ -23,6 +23,7 @@ public class MainClass extends JavaPlugin {
 
     @Override
     public void onDisable(){
+
 
     }
 

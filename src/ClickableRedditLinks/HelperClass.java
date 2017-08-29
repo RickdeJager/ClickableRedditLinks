@@ -46,10 +46,17 @@ public class HelperClass {
             return message;
 
         } catch (IllegalArgumentException e) {
-            System.out.println("[ClickableRedditLinks] An error occurred while trying to get the subreddit/user");
+            System.out.println("[ClickableRedditLinks] An error occurred while trying to get the subreddit/user.");
             return null;
         }
 
+    }
+
+    public boolean ContainsRedditLink(String message){
+        if ((message.contains("/r/") && !message.contains("reddit.com/r/"))||message.contains("/u/") && !message.contains("reddit.com/u/")) {
+            return true;
+        }
+        return false;
     }
 
 
