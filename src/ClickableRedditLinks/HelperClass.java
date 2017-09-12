@@ -3,16 +3,28 @@ package ClickableRedditLinks;
 
 import org.bukkit.Bukkit;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class HelperClass {
 
+
+    String regex = "\\W\\/[ru]\\/\\w+?\\b"; //[non-word][/][char][/][r or u][up to word boundary]
 
     //ToBeReplacedWithStuff is a placeholder for the /r/subreddit or /u/user link, if a user uses 'ToBeReplacedWithStuff' in a chat message, stuff will break, but that's on them tbh.
     String link = " \"},{\"text\":\"[ToBeReplacedWithStuff]\",\"color\":\"gold\",\"bold\":true,\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.reddit.comToBeReplacedWithStuff\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Open ToBeReplacedWithStuff\",\"color\":\"blue\"}]}}},{\"text\":\" ";
 
 
-    public String FindSubString(String message, String s){
+    public String FindSubString(String input, int StartingPoint){
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+        if(m.find(StartingPoint)){
+            return m.group(0);
+        }
 
-        int startIndex = message.indexOf("/"+s+"/");
+
+
+      /*  int startIndex = message.indexOf("/"+s+"/");
         int endIndex = message.indexOf(" ", startIndex);
         if ((message.indexOf("\"", startIndex) <= endIndex ||endIndex < 0 )&& message.indexOf("\"", startIndex)>0) {
             if (message.indexOf("\"", startIndex) > 0) {
@@ -24,14 +36,36 @@ public class HelperClass {
 
         String substring = message.substring(message.indexOf("/"+s+"/")+3,endIndex);
 
-        return substring;
+        return substring;*/
     }
 
-    public String FilterMessage(String message, Boolean UseJson){
+    public String FilterMessage(String message){
 
-        if (!UseJson) link = "https:reddit.comToBeReplacedWithStuff";
+        try{
 
-        try {
+            int LastIndex = 0;
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(message);
+
+            for (int i = 0; i == NumberOfRegexMatches(message,regex);i++){  //regex: [Any non-word][/][any A-z][/]
+
+
+
+
+
+            }
+
+
+
+
+        }catch(Exception e){
+
+        }
+
+
+
+
+        /*try {
             if (message.contains("/r/") && !message.contains("reddit.com/r/")) {
                 String subreddit = FindSubString(message, "r");
                 message = message.replace("/r/" + subreddit, link);
@@ -48,7 +82,7 @@ public class HelperClass {
         } catch (IllegalArgumentException e) {
             System.out.println("[ClickableRedditLinks] An error occurred while trying to get the subreddit/user.");
             return null;
-        }
+        }*/
 
     }
 
@@ -60,5 +94,16 @@ public class HelperClass {
     }
 
 
+    public int NumberOfRegexMatches(String input, String regex){
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+        int count = 0;
+        while (m.find()) {
+            count++;
+        }
+
+        return count;
+
+    }
 
 }

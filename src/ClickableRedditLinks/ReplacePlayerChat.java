@@ -37,7 +37,7 @@ public class ReplacePlayerChat implements Listener{
 
         private void ReplaceChat(String message, Set<Player> recipients){
 
-            message = hc.FilterMessage(message, true);
+            message = hc.FilterMessage(message);
 
             for(Player p : recipients){
                 Packet MessagePacket = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(message));
