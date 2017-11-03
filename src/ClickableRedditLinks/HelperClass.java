@@ -1,109 +1,40 @@
 package ClickableRedditLinks;
 
 
-import org.bukkit.Bukkit;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HelperClass {
 
 
-    String regex = "\\W\\/[ru]\\/\\w+?\\b"; //[non-word][/][char][/][r or u][up to word boundary]
+    String regex = "[^\\w\\[]\\/[ru]\\/\\w+?\\b"; //[non-word][/][char][/][r or u][up to word boundary]
 
     //ToBeReplacedWithStuff is a placeholder for the /r/subreddit or /u/user link, if a user uses 'ToBeReplacedWithStuff' in a chat message, stuff will break, but that's on them tbh.
-    String link = " \"},{\"text\":\"[ToBeReplacedWithStuff]\",\"color\":\"gold\",\"bold\":true,\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.reddit.comToBeReplacedWithStuff\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Open ToBeReplacedWithStuff\",\"color\":\"blue\"}]}}},{\"text\":\" ";
+    String link = " \"},{\"text\":\"[ToBeReplacedWithStuff]\",\"color\":\"gold\",\"bold\":true,\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.reddit.comToBeReplacedWithStuff\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Open https://www.reddit.comToBeReplacedWithStuff\",\"color\":\"blue\"}]}}},{\"text\":\" ";
 
 
-    public String FindSubString(String input, int StartingPoint){
+    public String ReplaceAllLinks(String input) {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
-        if(m.find(StartingPoint)){
-            return m.group(0);
+        if (m.find()) {
+            String subString = m.group(0).replaceAll("[\\s\"]",""); //Filter out all spaces and " so it doesn't get stuck in a recursive loop
+            return ReplaceAllLinks(FilterMessage(input, subString));
+        }else{
+            return input;
         }
-
-
-
-      /*  int startIndex = message.indexOf("/"+s+"/");
-        int endIndex = message.indexOf(" ", startIndex);
-        if ((message.indexOf("\"", startIndex) <= endIndex ||endIndex < 0 )&& message.indexOf("\"", startIndex)>0) {
-            if (message.indexOf("\"", startIndex) > 0) {
-                endIndex = message.indexOf("\"", startIndex);
-            }
-        }
-        if(endIndex < 0)  endIndex = message.length();
-     //   Bukkit.broadcastMessage("Start:"+startIndex +" || End:"+endIndex); //Useful line for debugging
-
-        String substring = message.substring(message.indexOf("/"+s+"/")+3,endIndex);
-
-        return substring;*/
-    }
-
-    public String FilterMessage(String message){
-
-        try{
-
-            int LastIndex = 0;
-            Pattern p = Pattern.compile(regex);
-            Matcher m = p.matcher(message);
-
-            for (int i = 0; i == NumberOfRegexMatches(message,regex);i++){  //regex: [Any non-word][/][any A-z][/]
-
-
-
-
-
-            }
-
-
-
-
-        }catch(Exception e){
-
-        }
-
-
-
-
-        /*try {
-            if (message.contains("/r/") && !message.contains("reddit.com/r/")) {
-                String subreddit = FindSubString(message, "r");
-                message = message.replace("/r/" + subreddit, link);
-                message = message.replaceAll("ToBeReplacedWithStuff", "/r/" + subreddit);
-            }
-            if (message.contains("/u/") && !message.contains("reddit.com/u/")) {
-                String user = FindSubString(message, "u");
-                message = message.replace("/u/" + user, link);
-                message = message.replaceAll("ToBeReplacedWithStuff", "/u/" + user);
-            }
-
-            return message;
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("[ClickableRedditLinks] An error occurred while trying to get the subreddit/user.");
-            return null;
-        }*/
-
-    }
-
-    public boolean ContainsRedditLink(String message){
-        if ((message.contains("/r/") && !message.contains("reddit.com/r/"))||message.contains("/u/") && !message.contains("reddit.com/u/")) {
-            return true;
-        }
-        return false;
     }
 
 
-    public int NumberOfRegexMatches(String input, String regex){
+
+    public String FilterMessage(String message, String substring) {
+        return message.replace(substring, link.replaceAll("ToBeReplacedWithStuff", substring));
+    }
+
+    public boolean ContainsRedditLink(String input){
+
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
-        int count = 0;
-        while (m.find()) {
-            count++;
-        }
-
-        return count;
-
+        return m.find();
     }
 
 }

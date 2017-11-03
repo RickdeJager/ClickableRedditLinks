@@ -26,7 +26,7 @@ public class ReplaceAllChat {
                 WrappedChatComponent msg = chatComponents.read(0);
                 String message = msg.getJson();
 
-                message = hc.FilterMessage(message);
+                message = hc.ReplaceAllLinks(message);
                 try {
                     msg.setJson(message);
                     chatComponents.write(0, msg);

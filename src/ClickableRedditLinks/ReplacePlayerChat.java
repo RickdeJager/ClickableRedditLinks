@@ -23,7 +23,7 @@ public class ReplacePlayerChat implements Listener{
         @EventHandler
         public void OnPlayerChatEvent (AsyncPlayerChatEvent e){
             String message = e.getMessage();
-            message = "[\"\",{\"text\":\""+"<"+e.getPlayer().getDisplayName()+"> "+message+"\"}]"; //convert the string to a single json object.
+            message = "[\"\",{\"text\":\""+"<"+e.getPlayer().getDisplayName()+"> "+message+"\"}]"; //convert the string to a simple json object.
 
             if(hc.ContainsRedditLink(message)){
                 recipients = e.getRecipients();
@@ -37,10 +37,16 @@ public class ReplacePlayerChat implements Listener{
 
         private void ReplaceChat(String message, Set<Player> recipients){
 
-            message = hc.FilterMessage(message);
+            message = hc.ReplaceAllLinks(message);
+            Packet MessagePacket;
+            try {
+                MessagePacket = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(message));
+            }catch (Exception e){
+                System.out.println("whoopsie daysie");
+                return;
+            }
 
             for(Player p : recipients){
-                Packet MessagePacket = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(message));
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(MessagePacket);
 
             }
