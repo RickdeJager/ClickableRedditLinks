@@ -19,7 +19,7 @@ public class ReplaceAllChat {
     HelperClass hc = new HelperClass(); //Grab an object of the helperclass to use it's methods
 
     /**
-     *This method set's up the onPacketSending listener
+     *This method sets up the onPacketSending listener
      */
     public void init(Plugin pl) {
 
