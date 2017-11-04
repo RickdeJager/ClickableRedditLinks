@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ClickableRedditLinks:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ClickableRedditLinks_jar</output-path>
+    <root id="archive" name="ClickableRedditLinks.jar">
+      <element id="module-output" name="ClickableRedditLinks" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/ClickableRedditLinks/plugin.yml" />
+    </root>
+  </artifact>
+</component>
